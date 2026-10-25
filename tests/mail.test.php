@@ -36,12 +36,12 @@ assert(strpos($client, 'Имя') !== false, 'client keeps name');
 assert(strpos($client, 'Источник') === false && strpos($client, 'Путь') === false && strpos($client, 'Метрики') === false, 'client stripped: ' . $client);
 
 $admin = $mailf($msg, $form, $data, null, null, ['email-recipients' => 'default', 'recipients' => 'neverend.wed@gmail.com']);
-assert(strpos($admin, '<a href="https://neverend.wedding/ru/kontakty/">/ru/kontakty/</a>') !== false, 'link kontakty');
-assert(strpos($admin, '<a href="https://neverend.wedding/ru/">/ru/</a>)') !== false, 'link in entry with paren');
+assert(strpos($admin, '<a class="wpa-link" href="https://neverend.wedding/ru/kontakty/">/ru/kontakty/</a>') !== false, 'link kontakty');
+assert(strpos($admin, '<a class="wpa-link" href="https://neverend.wedding/ru/">/ru/</a>)') !== false, 'link in entry with paren');
 assert(strpos($admin, 'href="https://neverend.wedding/ru/ceny/?a=1"') !== false, 'link with query');
 assert(substr_count($admin, '<a ') === 6, 'six links: ' . substr_count($admin, '<a '));
 assert(strpos($admin, 'test / cpc / wpa_check2') !== false, 'text intact');
-assert(strpos($admin, '→ <a href="https://neverend.wedding/">/</a> →') !== false, 'homepage link in path');
+assert(strpos($admin, '→ <a class="wpa-link" href="https://neverend.wedding/">/</a> →') !== false, 'homepage link in path');
 $draft = $mailf($msg, $form, $data, null, null, ['type' => 'save_draft', 'recipients' => '{save_and_continue_email}']);
 assert(strpos($draft, 'Путь') === false, 'draft stripped');
 $routing = $mailf($msg, $form, $data, null, null, ['email-recipients' => 'conditions', 'recipients' => '{email-1}']);
