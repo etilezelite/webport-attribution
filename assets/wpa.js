@@ -1,4 +1,4 @@
-/*! Webport Attribution 1.0.1 | Webport.Studio */
+/*! Webport Attribution 1.2.0 | Webport.Studio */
 /* Логика values/summary повторяет includes/core.php — менять синхронно. */
 (function (root, factory) {
 	var core = factory();
