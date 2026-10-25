@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Webport Attribution
  * Description:       Путь посетителя до заявки: первое и последнее касание, UTM, click-ID, ClientID Метрики и GA4, страницы визитов — в скрытые поля Forminator.
- * Version:           1.0.1
+ * Version:           1.2.0
  * Author:            Webport.Studio
  * Requires at least: 6.3
  * Requires PHP:      7.4
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPA_VERSION', '1.0.1' );
+define( 'WPA_VERSION', '1.2.0' );
 define( 'WPA_FILE', __FILE__ );
 define( 'WPA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPA_URL', plugin_dir_url( __FILE__ ) );
@@ -32,6 +32,7 @@ require_once WPA_DIR . 'includes/core.php';
 require_once WPA_DIR . 'includes/rest.php';
 require_once WPA_DIR . 'includes/frontend.php';
 require_once WPA_DIR . 'includes/forminator.php';
+require_once WPA_DIR . 'includes/generic.php';
 
 if ( is_admin() ) {
 	require_once WPA_DIR . 'includes/admin.php';
