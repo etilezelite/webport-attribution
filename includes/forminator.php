@@ -154,11 +154,15 @@ function strip_rows( string $message, array $labels ): string {
  * Ссылками становятся страница после «вход» и все страницы в части «Путь: …»
  * (разделитель « / » между источником и каналом не трогаем). $text — уже экранированный.
  */
-function linkify_paths( string $text ): string {
+function linkify_paths( string $text, bool $html = true ): string {
 	$home   = wp_parse_url( home_url() );
 	$origin = ( $home['scheme'] ?? 'https' ) . '://' . ( $home['host'] ?? '' ) . ( isset( $home['port'] ) ? ':' . $home['port'] : '' );
-	$link   = static function ( $p ) use ( $origin ) {
-		return '<a href="' . esc_url( $origin . html_entity_decode( $p, ENT_QUOTES, 'UTF-8' ) ) . '">' . $p . '</a>';
+	$link   = static function ( $p ) use ( $origin, $html ) {
+		if ( ! $html ) {
+			// Текстовое письмо: полный адрес, почтовые программы сами делают его ссылкой.
+			return $origin . $p;
+		}
+		return '<a class="wpa-link" href="' . esc_url( $origin . html_entity_decode( $p, ENT_QUOTES, 'UTF-8' ) ) . '">' . $p . '</a>';
 	};
 	$lab    = labels();
 	$parts  = explode( ' | ', $text );
