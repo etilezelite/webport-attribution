@@ -1,0 +1,26 @@
+name: Build release zip
+on:
+  release:
+    types: [published]
+permissions:
+  contents: write
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: webport-attribution
+      - name: Add update checker library
+        run: |
+          mkdir -p webport-attribution/vendor
+          git clone -q --depth 1 --branch v5.7 https://github.com/YahnisElsts/plugin-update-checker.git webport-attribution/vendor/plugin-update-checker
+          rm -rf webport-attribution/vendor/plugin-update-checker/{.git,.github,examples,build,phpcs.xml}
+      - name: Build zip
+        run: |
+          rm -rf webport-attribution/.git webport-attribution/.github webport-attribution/tests webport-attribution/.gitattributes webport-attribution/.gitignore
+          zip -rq webport-attribution.zip webport-attribution
+      - name: Upload asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" webport-attribution.zip --repo "${{ github.repository }}" --clobber
